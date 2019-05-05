@@ -1,0 +1,78 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .login-content {
+    width: 400px;
+    padding: 15px;
+    margin-top: 150px;
+    box-shadow: 0px 0px 5px grey;
+    .login-title {
+      font-size: 22px;
+      text-align: center;
+    }
+    .login-field-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px; 
+      padding: 10px 0px;
+      .contry-code-select {
+        width: 75px;
+        height: 48px;
+        padding: 0px 10px;
+        margin-right: 10px;
+        border: none;
+        background: white;
+        border-bottom: 1px solid #000;
+      }
+    }
+    .login-btn-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 30px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+  .login-desc {
+    font-size: 13px;
+    line-height: 15px;
+    padding: 0px 20px;
+  }
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 45px;
+  .label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  .input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
+  }
+  .input:focus {
+    outline: none;
+  }
+  .input:focus ~ .label,
+  .input:valid ~ .label {
+    top: -20px;
+    font-size: 14px;
+    color: #5264ae;
+  }
+}

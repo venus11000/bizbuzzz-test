@@ -3,16 +3,14 @@ import './style.scss';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
-const countryCode = ["+91", "+123", "+345"];
-class Login extends React.Component {
+class VerifyNumber extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            enableSubmit: false,
             data: {
-                mobileNumber: '',
-                countryCode: countryCode[0]
-            }
+                otp: ''
+            },
+            enableSubmit: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,12 +32,16 @@ class Login extends React.Component {
         event.preventDefault();
         console.log(this.state);
     }
+    resendOTP() {
+        //  API to Resend OTP
+        console.log("Resend");
+    }
     reset() {
         this.setState({
             data: {
-                mobileNumber: '',
-                countryCode: countryCode[0]
-            }
+                otp: '',
+            },
+            enableSubmit: false
         })
     }
     render() {
@@ -47,20 +49,15 @@ class Login extends React.Component {
         return (
             <div className="login-container">
                 <div className="login-content">
-                    <div className="login-title">Enter your phone number</div>
+                    <div className="login-title">Verify your phone number</div>
+                    <div className="verify-number">Enter the 6-digit code we sent to <span>+91 8495030355</span></div>
                     <div className="login-field-container">
-                        <select className="contry-code-select" name="countryCode" onChange={this.handleChange} value={data.countryCode}>
-                            {countryCode.map((country, index) =>
-                                <option key={index} value={country}>{country}</option>)}
-                        </select>
-                        <div>
-                            <Input
-                                label="Phone Number"
-                                name="mobileNumber"
-                                onChange={this.handleChange}
-                                value={data.mobileNumber}
-                            />
-                        </div>
+                        <Input
+                            label="6-digit code"
+                            name="otp"
+                            onChange={this.handleChange}
+                            value={data.otp}
+                        />
                     </div>
                     <div className="login-btn-container">
                         <Button
@@ -69,16 +66,22 @@ class Login extends React.Component {
                             onClick={this.reset}
                         />
                         <Button
-                            label="Verify"
+                            label="Continue"
                             onClick={this.handleSubmit}
                             disable={!this.enableSubmit}
                         />
                     </div>
-                    <p className="login-desc">By tapping Verify, an SMS may be sent. Message & data rates may apply.</p>
+                    <p className="login-desc">By tapping Continue you are indicating that you agree to the <a>Terms of Service</a></p>
+                    <div className="flex-container">
+                        <Button
+                            label="Resend"
+                            onClick={this.resendOTP}
+                        />
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default Login;
+export default VerifyNumber;

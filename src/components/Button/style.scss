@@ -1,0 +1,20 @@
+.button {
+  height: 35px;
+  width: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  background: #0000ff;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.button.reset {
+    color: #0000ff;
+    background-color: #fff;
+}
+
+.button:hover {
+    background-color: #bbb;
+}
