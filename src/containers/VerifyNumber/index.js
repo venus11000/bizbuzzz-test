@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './style.scss';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+import { showLoginScreen, login } from '../../actions';
 
 class VerifyNumber extends React.Component {
     constructor(props) {
@@ -30,11 +34,12 @@ class VerifyNumber extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        console.log(this.state, this.props);
+        this.props.login({ ...this.props.loginData, otp: this.state.data.otp });
     }
     resendOTP() {
         //  API to Resend OTP
-        console.log("Resend");
+        console.log("Resend", this.state);
     }
     reset() {
         this.setState({
@@ -42,7 +47,8 @@ class VerifyNumber extends React.Component {
                 otp: '',
             },
             enableSubmit: false
-        })
+        });
+        this.props.showLoginScreen();
     }
     render() {
         let data = { ...this.state.data };
@@ -84,4 +90,15 @@ class VerifyNumber extends React.Component {
     }
 }
 
-export default VerifyNumber;
+
+const mapStateToProps = (state) => {
+    return {
+        loginData: state.loginData
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ showLoginScreen, login }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyNumber);

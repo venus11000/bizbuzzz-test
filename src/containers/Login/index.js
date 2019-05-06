@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './style.scss';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+import { login } from '../../actions';
 
 const countryCode = ["+91", "+123", "+345"];
 class Login extends React.Component {
@@ -33,6 +37,7 @@ class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state);
+        this.props.login(this.state.data);
     }
     reset() {
         this.setState({
@@ -81,4 +86,14 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+    return {
+        mobileNumber: state.mobileNumber
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ login }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
