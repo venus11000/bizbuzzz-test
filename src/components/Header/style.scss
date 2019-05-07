@@ -1,0 +1,19 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo-container {
+    .logo {
+      height: 45px;
+      cursor: pointer;
+    }
+  }
+  .profile-container {
+    .profile-img {
+      height: 50px;
+      width: 50px;
+      border-radius: 35px;
+      cursor: pointer;
+    }
+  }
+}

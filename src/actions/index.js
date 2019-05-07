@@ -4,7 +4,7 @@ import { userData } from '../feed/data';
 export const SHOW_VERIFY_PHONE_SCREEN = 'SHOW_VERIFY_PHONE_SCREEN';
 export const SHOW_LOGIN_SCREEN = 'SHOW_LOGIN_SCREEN';
 export const SHOW_DASHBOARD = 'SHOW_DASHBOARD';
-export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 
@@ -49,6 +49,13 @@ export function login(data) {
     //             dispatch(loginError(error.response));
     //         });
     // };
+}
+
+export function logout() {
+    console.log("Logout");
+    return {
+        type: LOGOUT
+    }
 }
 
 
