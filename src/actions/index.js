@@ -1,5 +1,5 @@
 import { AxiosAPI } from "../api/AxiosAPI";
-import { userData } from '../feed/data';
+import { userData, categories, items } from '../feed/data';
 
 export const SHOW_VERIFY_PHONE_SCREEN = 'SHOW_VERIFY_PHONE_SCREEN';
 export const SHOW_LOGIN_SCREEN = 'SHOW_LOGIN_SCREEN';
@@ -7,6 +7,10 @@ export const SHOW_DASHBOARD = 'SHOW_DASHBOARD';
 export const LOGOUT = 'LOGOUT';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
+export const GET_CATEGORIES_ERROR = 'GET_CATEGORIES_ERROR';
+export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
+export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
 
 
 export function loginSucces(data) {
@@ -24,7 +28,6 @@ export function loginError(data) {
 }
 
 export function login(data) {
-    console.log(data, userData);
     return (dispatch) => {
         let user = userData[0]
         if (data.mobileNumber === user.mobileNumber) {
@@ -49,6 +52,62 @@ export function login(data) {
     //             dispatch(loginError(error.response));
     //         });
     // };
+}
+
+export function getCategoriesSucces(data) {
+    return {
+        type: GET_CATEGORIES_SUCCESS,
+        data
+    }
+}
+
+export function getCategoriesError(data) {
+    return {
+        type: GET_CATEGORIES_ERROR,
+        data
+    }
+}
+export function getCategories() {
+    return (dispatch) => {
+        if(categories)
+        dispatch(getCategoriesSucces(categories));
+        else
+        dispatch(getCategoriesError({error: "Unable to get Categories"}))
+
+    }
+    // return (dispatch) => {
+    //     AxiosAPI.post('/categories', data)
+    //         .then(response => {
+    //             dispatch(getCategiesSucces(response.data));
+    //         })
+    //         .catch(error => {
+    //             dispatch(getCategoriesError(error.response));
+    //         });
+    // };
+}
+
+export function getItemsSuccess(data) {
+    return {
+        type: GET_ITEMS_SUCCESS,
+        data
+    }
+}
+
+export function getItemsError(data) {
+    return {
+        type: GET_ITEMS_ERROR,
+        data
+    }
+}
+
+export function getItems() {
+    return (dispatch) => {
+        if(items) {
+            dispatch(getItemsSuccess(items));
+        } else {
+            dispatch(getItemsError({ error: 'Unable to get Items!!!'}));
+        }
+    }
 }
 
 export function logout() {

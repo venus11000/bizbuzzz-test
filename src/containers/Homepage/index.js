@@ -8,6 +8,7 @@ import VerifyNumber from '../VerifyNumber';
 import Dashboard from '../Dashboard';
 
 import { showDashboard } from '../../actions';
+import { Layout } from 'antd';
 
 class Homepage extends React.Component {
     componentWillMount() {
@@ -16,12 +17,17 @@ class Homepage extends React.Component {
         }
     }
     render() {
+        const { Content } = Layout;
         console.log(this.props);
-        return <div className="container">
-            {this.props.screen === 'getMobileNumberScreen' && <Login />}
-            {this.props.screen === 'verifyNumber' && <VerifyNumber />}
-            {this.props.screen === 'dashboard' && <Dashboard />}
-        </div>
+        return (
+            <Content>
+                <div className="container">
+                    {this.props.screen === 'getMobileNumberScreen' && <Login />}
+                    {this.props.screen === 'verifyNumber' && <VerifyNumber />}
+                    {this.props.screen === 'dashboard' && <Dashboard />}
+                </div>
+            </Content>
+        );
     }
 }
 
