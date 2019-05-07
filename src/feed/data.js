@@ -26,26 +26,61 @@ export const categories =  [{
 export const items = [{
     name: "Parle G Original Gluco Biscuits",
     image: img001,
+    available: true,
+    liked: true,
     price: 123,
-    quantity: 50
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
 }, {
     name: "Britannia Marie Gold Biscuits",
     image: img002,
+    available: false,
+    liked: true,
     price: 456,
-    quantity: 10
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
 }, {
     name: "Sunfeast Dark Fantasy Choco Fills",
     image: img003,
+    available: true,
+    liked: false,
     price: 234,
-    quantity: 0
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
 }, {
     name: "Sunfeast Dark Fantasy Choco Fills Luxuria",
     image: img004,
+    available: true,
+    liked: false,
     price: 789,
-    quantity: 5
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
 }, {
     name: "Unibic Fruit & Nut Cookies",
     image: img005,
+    available: true,
+    liked: false,
     price: 143,
-    quantity: 10
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
 }]

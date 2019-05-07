@@ -7,6 +7,7 @@ import SiderMenu from '../../components/SiderMenu';
 
 import { items } from '../../feed/data';
 import { getItems } from '../../actions';
+import { Breadcrumb } from 'antd';
 
 class Dashboard extends React.Component {
     componentDidMount() {
@@ -18,7 +19,8 @@ class Dashboard extends React.Component {
     getItemsView() {
         const { items } = this.props;
         return items && items.map((item, index) => {
-            return <div className={item.quantity > 0 ? "item" : "item disabled"} onClick={this.showItemPopup}>
+            return <div className={item.available > 0 ? "item" : "item disabled"} onClick={this.showItemPopup}>
+                {item.liked ? <i className="fas fa-heart liked red"></i> : <i className="far fa-heart liked"></i>}
                 <div className="item-img-container">
                     <div className="item-img">
                         <img src={item.image} />
@@ -26,9 +28,15 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="item-description">
                     <div className="item-name">{item.name}</div>
-                    <div className="item-footer">
-                        <div className="price">₹ {item.price}</div>
-                        <div className="quantity">{item.quantity}</div>
+                    <div className="item-quantity">{item.quantity}</div>
+                    <div className="item-rating">
+                        <div className="rating">{item.rating} <i className="fas fa-star"></i></div>
+                        <div className="comment">({item.commentsCount})</div>
+                    </div>
+                    <div className="prices">
+                        <div className="selling-price">₹{item.sellingPrice}</div>
+                        <div className="actual-price">₹{item.actualPrice}</div>
+                        <div className="discount-price">₹{item.discount} off</div>
                     </div>
                 </div>
             </div>
@@ -40,8 +48,17 @@ class Dashboard extends React.Component {
                 <div>
                     <SiderMenu />
                 </div>
-                <div className="items-container">
-                    {this.getItemsView()}
+                <div>
+                    <Breadcrumb className="breadcrumb">
+                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            <a href="">Biscuits</a>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>All</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div className="items-container">
+                        {this.getItemsView()}
+                    </div>
                 </div>
             </div>
         );
