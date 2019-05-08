@@ -9,7 +9,7 @@ export const userData = [{
     otp: '123456'
 }];
 
-export const categories =  [{
+export const categories = [{
     name: 'biscuits',
     label: 'Biscuits',
     types: ['all', 'cookies', 'cream biscuit', 'milk  & glucose', 'salted', 'cheeslets']
@@ -21,7 +21,12 @@ export const categories =  [{
     name: 'juice',
     label: 'Juice',
     types: ['all', 'orenge juice', 'other juice']
-}];
+}, { name: 'electronics', label: 'Electronics' },
+{ name: 'tv-appliances', label: 'TVs & Appliances', types: [] },
+{ name: 'men', label: 'Men', types: ['clothes', 'shoes', 'casuals'] },
+{ name: 'women', label: 'Women', types: ['clothes', 'shoes', 'casuals'] },
+{ name: 'baby-kids', label: 'Baby & Kids', types: ['toys'] }
+];
 
 export const items = [{
     name: "Parle G Original Gluco Biscuits",
@@ -53,6 +58,78 @@ export const items = [{
     available: true,
     liked: false,
     price: 234,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Sunfeast Dark Fantasy Choco Fills Luxuria",
+    image: img004,
+    available: true,
+    liked: false,
+    price: 789,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Unibic Fruit & Nut Cookies",
+    image: img005,
+    available: true,
+    liked: false,
+    price: 143,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Sunfeast Dark Fantasy Choco Fills Luxuria",
+    image: img004,
+    available: true,
+    liked: false,
+    price: 789,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Unibic Fruit & Nut Cookies",
+    image: img005,
+    available: true,
+    liked: false,
+    price: 143,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Sunfeast Dark Fantasy Choco Fills Luxuria",
+    image: img004,
+    available: true,
+    liked: false,
+    price: 789,
+    quantity: '500g',
+    rating: 4.8,
+    commentsCount: 33,
+    sellingPrice: 80,
+    actualPrice: 84,
+    discount: 4
+}, {
+    name: "Unibic Fruit & Nut Cookies",
+    image: img005,
+    available: true,
+    liked: false,
+    price: 143,
     quantity: '500g',
     rating: 4.8,
     commentsCount: 33,

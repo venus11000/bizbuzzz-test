@@ -1,4 +1,4 @@
-import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS } from '../actions';
+import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS, GET_USERDETAILS_SUCCESS } from '../actions';
 
 const initialState = {
     screen: 'getMobileNumberScreen'
@@ -25,7 +25,8 @@ const rootReducer = (state = initialState, action) => {
         case LOGOUT: localStorage.removeItem('token');
             return {
                 ...state,
-                screen: 'getMobileNumberScreen'
+                screen: 'getMobileNumberScreen',
+                userDetails: null
             }
 
         case GET_CATEGORIES_SUCCESS: return {
@@ -40,6 +41,10 @@ const rootReducer = (state = initialState, action) => {
         case SHOW_DASHBOARD: return {
             ...state,
             screen: 'dashboard'
+        }
+        case GET_USERDETAILS_SUCCESS: return {
+            ...state,
+            userDetails: action.data
         }
     }
     return state;

@@ -1,17 +1,30 @@
 .dashboard-container {
   display: flex;
+  justify-content: center;
   //   color: #666;
   .breadcrumb {
-    padding: 25px 20px 20px 20px;
+    font-size: 12px;
+    padding: 20px 20px 10px 20px;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+  }
+  .pagination-text {
+    font-size: 14px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    font-weight: 600;
   }
   .items-container {
     display: flex;
     flex-wrap: wrap;
     .item {
       position: relative;
+      margin: 10px;
       padding: 20px;
       box-shadow: 0px 0px 5px grey;
-      margin: 10px;
+      background-color: white;
       width: 250px;
       //   height: 250px;
       cursor: pointer;

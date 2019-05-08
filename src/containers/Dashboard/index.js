@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Breadcrumb, Pagination } from 'antd';
 import './style.scss';
 
 import SiderMenu from '../../components/SiderMenu';
-
-import { items } from '../../feed/data';
 import { getItems } from '../../actions';
-import { Breadcrumb } from 'antd';
 
 class Dashboard extends React.Component {
     componentDidMount() {
@@ -46,7 +44,7 @@ class Dashboard extends React.Component {
         return (
             <div className="dashboard-container">
                 <div>
-                    <SiderMenu />
+                    {/* <SiderMenu /> */}
                 </div>
                 <div>
                     <Breadcrumb className="breadcrumb">
@@ -56,8 +54,12 @@ class Dashboard extends React.Component {
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>All</Breadcrumb.Item>
                     </Breadcrumb>
+                    <div className="pagination-text">Showing 1 - 40 of 710 results for "grocery"</div>
                     <div className="items-container">
                         {this.getItemsView()}
+                    </div>
+                    <div className="pagination">
+                        <Pagination defaultCurrent={1} total={50} />
                     </div>
                 </div>
             </div>

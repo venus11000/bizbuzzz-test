@@ -11,6 +11,8 @@ export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
 export const GET_CATEGORIES_ERROR = 'GET_CATEGORIES_ERROR';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
+export const GET_USERDETAILS_SUCCESS = 'GET_USERDETAILS_SUCCESS';
+export const GET_USERDETAILS_ERROR = 'GET_USERDETAILS_ERROR';
 
 
 export function loginSucces(data) {
@@ -34,6 +36,7 @@ export function login(data) {
             if (data.otp)
                 if (data.otp === user.otp) {
                     dispatch(loginSucces({ token: "Token", data }));
+                    dispatch(getUserdetails());
                 } else {
                     dispatch(loginError({ inputError: 'Invalid OTP!!!' }));
                 }
@@ -106,6 +109,30 @@ export function getItems() {
             dispatch(getItemsSuccess(items));
         } else {
             dispatch(getItemsError({ error: 'Unable to get Items!!!'}));
+        }
+    }
+}
+
+export function getUserdetailsSuccess(data) {
+    return {
+        type: GET_USERDETAILS_SUCCESS,
+        data
+    }
+}
+
+export function getUserdetailsError(data) {
+    return {
+        type: GET_USERDETAILS_ERROR,
+        data
+    }
+}
+export function getUserdetails() {
+    return (dispatch) => {
+        let user = userData[0];
+        if(user) {
+            dispatch(getUserdetailsSuccess(user));
+        } else {
+            dispatch(getUserdetailsError({ error: 'Unable to get User'}));
         }
     }
 }
