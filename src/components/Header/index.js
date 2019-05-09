@@ -97,8 +97,8 @@ class Header extends React.Component {
                         {this.props.userDetails && <div className="profile-container">
                             <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link" href="#">
-                                    <img className="profile-img" src={ProfileDefault} />
-                                    <span className="profile-name">{this.props.userDetails.mobileNumber}</span>
+                                    <img className="profile-img" src={this.props.photoURL ? this.props.photoURL : ProfileDefault} />
+                                    <span className="profile-name">{this.props.userDetails.displayName ? this.props.userDetails.displayName : this.props.userDetails.phoneNumber}</span>
                                 </a>
                             </Dropdown>
                         </div>}
