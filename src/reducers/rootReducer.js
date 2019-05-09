@@ -19,6 +19,7 @@ const rootReducer = (state = initialState, action) => {
 
         case LOGIN_ERROR: return {
             ...state,
+            error: action.data.error,
             inputError: action.data.inputError
         }
 

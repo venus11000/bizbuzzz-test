@@ -1,5 +1,5 @@
-import { AxiosAPI } from "../api/AxiosAPI";
-import { userData, categories, items } from '../feed/data';
+import firebase from 'firebase';
+import { categories, items } from '../feed/data';
 
 export const SHOW_VERIFY_PHONE_SCREEN = 'SHOW_VERIFY_PHONE_SCREEN';
 export const SHOW_LOGIN_SCREEN = 'SHOW_LOGIN_SCREEN';
@@ -31,30 +31,33 @@ export function loginError(data) {
 
 export function login(data) {
     return (dispatch) => {
-        let user = userData[0]
-        if (data.mobileNumber === user.mobileNumber) {
-            if (data.otp)
-                if (data.otp === user.otp) {
-                    dispatch(loginSucces({ token: "Token", data }));
-                    dispatch(getUserdetails());
-                } else {
-                    dispatch(loginError({ inputError: 'Invalid OTP!!!' }));
-                }
-            else
-                dispatch(loginSucces({ required: 'otp', data }));
-        } else {
-            dispatch(loginError({ inputError: "Invalid Mobile number" }));
+        if (data.mobileNumber) {
+            if (data.confirmationResult && data.otp) {
+                let confirmationResult = data.confirmationResult;
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                    .then(() => {
+                        confirmationResult.confirm(data.otp).then(function (result) {
+                            // User signed in successfully.
+                            var user = result.user;
+                            dispatch(loginSucces({ token: "Token", user }));
+                            dispatch(getUserdetails());
+                        }).catch(function (error) {
+                            // User couldn't sign in (bad verification code?)
+                            dispatch(loginError({ error, inputError: "" }));
+                        });
+                    });
+            } else {
+                firebase.auth().signInWithPhoneNumber(data.countryCode + data.mobileNumber, window.recaptchaVerifier)
+                    .then(function (confirmationResult) {
+                        // SMS sent. Prompt user to type the code from the message, then sign the
+                        // user in with confirmationResult.confirm(code).
+                        dispatch(loginSucces({ required: 'otp', data: { ...data, confirmationResult } }));
+                    }).catch(function (error) {
+                        dispatch(loginError({ error, inputError: "" }));
+                    });
+            }
         }
     }
-    // return (dispatch) => {
-    //     AxiosAPI.post('/login', data)
-    //         .then(response => {
-    //             dispatch(loginSucces(response.data));
-    //         })
-    //         .catch(error => {
-    //             dispatch(loginError(error.response));
-    //         });
-    // };
 }
 
 export function getCategoriesSucces(data) {
@@ -72,21 +75,12 @@ export function getCategoriesError(data) {
 }
 export function getCategories() {
     return (dispatch) => {
-        if(categories)
-        dispatch(getCategoriesSucces(categories));
+        if (categories)
+            dispatch(getCategoriesSucces(categories));
         else
-        dispatch(getCategoriesError({error: "Unable to get Categories"}))
+            dispatch(getCategoriesError({ error: "Unable to get Categories" }))
 
     }
-    // return (dispatch) => {
-    //     AxiosAPI.post('/categories', data)
-    //         .then(response => {
-    //             dispatch(getCategiesSucces(response.data));
-    //         })
-    //         .catch(error => {
-    //             dispatch(getCategoriesError(error.response));
-    //         });
-    // };
 }
 
 export function getItemsSuccess(data) {
@@ -105,10 +99,10 @@ export function getItemsError(data) {
 
 export function getItems() {
     return (dispatch) => {
-        if(items) {
+        if (items) {
             dispatch(getItemsSuccess(items));
         } else {
-            dispatch(getItemsError({ error: 'Unable to get Items!!!'}));
+            dispatch(getItemsError({ error: 'Unable to get Items!!!' }));
         }
     }
 }
@@ -128,17 +122,19 @@ export function getUserdetailsError(data) {
 }
 export function getUserdetails() {
     return (dispatch) => {
-        let user = userData[0];
-        if(user) {
-            dispatch(getUserdetailsSuccess(user));
-        } else {
-            dispatch(getUserdetailsError({ error: 'Unable to get User'}));
-        }
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                dispatch(getUserdetailsSuccess(user));
+            } else {
+                dispatch(getUserdetailsError({ error: 'Unable to get User' }));
+            }
+        });
     }
 }
 
 export function logout() {
     console.log("Logout");
+    // firebase.auth.signOut();
     return {
         type: LOGOUT
     }
@@ -164,10 +160,3 @@ export function showDashboard() {
         type: SHOW_DASHBOARD
     }
 }
-
-// export function login(data) {
-//     return {
-//         type: LOGIN,
-//         data
-//     }
-// }

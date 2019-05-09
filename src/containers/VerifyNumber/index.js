@@ -21,7 +21,6 @@ class VerifyNumber extends React.Component {
         this.reset = this.reset.bind(this);
     }
     handleChange(event) {
-        console.log(event.target.name, event.target.value);
         let fieldName = event.target.name;
         let fieldValue = event.target.value;
 
@@ -34,7 +33,6 @@ class VerifyNumber extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state, this.props);
         this.props.login({ ...this.props.loginData, otp: this.state.data.otp });
     }
     resendOTP() {

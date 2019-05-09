@@ -6,6 +6,7 @@ import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
 import { login } from '../../actions';
+import firebase from 'firebase';
 
 const countryCode = ["+91", "+123", "+345"];
 class Login extends React.Component {
@@ -22,8 +23,16 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.reset = this.reset.bind(this);
     }
+    componentDidMount() {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+            'size': 'invisible',
+            'callback': function (response) {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                //   onSignInSubmit();
+            }
+        });
+    }
     handleChange(event) {
-        console.log(event.target.name, event.target.value);
         let fieldName = event.target.name;
         let fieldValue = event.target.value;
 
@@ -36,7 +45,6 @@ class Login extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
         this.props.login(this.state.data);
     }
     reset() {
@@ -74,6 +82,7 @@ class Login extends React.Component {
                             onClick={this.reset}
                         />
                         <Button
+                            id='sign-in-button'
                             label="Verify"
                             onClick={this.handleSubmit}
                             disable={!this.enableSubmit}
