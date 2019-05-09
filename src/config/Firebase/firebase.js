@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD5Rj5k-wVyQ2qHiVxBkEcI2CF5BxZXfR0",
@@ -16,8 +17,12 @@ class Firebase {
         app.initializeApp(firebaseConfig);
 
         this.auth = app.auth();
-        // this.auth().useDeviceLanguage();
+        this.db = app.database();
     }
+
+    // *** API ***
+    categories = () => this.db.ref('categories');
+    category = id => this.db.ref(`categories/${id}`);
 }
 
 export default Firebase;

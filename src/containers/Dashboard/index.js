@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Breadcrumb, Pagination } from 'antd';
 import './style.scss';
 
-import SiderMenu from '../../components/SiderMenu';
 import { getItems } from '../../actions';
 
 class Dashboard extends React.Component {
@@ -21,7 +20,7 @@ class Dashboard extends React.Component {
                 {item.liked ? <i className="fas fa-heart liked red"></i> : <i className="far fa-heart liked"></i>}
                 <div className="item-img-container">
                     <div className="item-img">
-                        <img src={item.image} />
+                        <img src={'data:image/jpeg;base64, ' + item.image} />
                     </div>
                 </div>
                 <div className="item-description">

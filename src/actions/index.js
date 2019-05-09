@@ -75,10 +75,12 @@ export function getCategoriesError(data) {
 }
 export function getCategories() {
     return (dispatch) => {
-        if (categories)
+        firebase.database().ref().child('categories').on('value', snapshot => {
+            let categories = snapshot.val();
             dispatch(getCategoriesSucces(categories));
-        else
-            dispatch(getCategoriesError({ error: "Unable to get Categories" }))
+        }, (error) => {
+            dispatch(getCategoriesError({ error }));
+        });
 
     }
 }
@@ -99,11 +101,11 @@ export function getItemsError(data) {
 
 export function getItems() {
     return (dispatch) => {
-        if (items) {
-            dispatch(getItemsSuccess(items));
-        } else {
-            dispatch(getItemsError({ error: 'Unable to get Items!!!' }));
-        }
+        firebase.database().ref().child('items').on('value', snapshot => {
+            dispatch(getItemsSuccess(snapshot.val()));
+        }, (error) => {
+            dispatch(getItemsError({ error }));
+        });
     }
 }
 
