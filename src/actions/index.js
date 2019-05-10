@@ -45,7 +45,11 @@ export function login(data) {
                             dispatch(getUserdetails());
                         }).catch(function (error) {
                             // User couldn't sign in (bad verification code?)
-                            dispatch(loginError({ error, inputError: "" }));
+                            if (error.code === 'auth/invalid-verification-code') {
+                                dispatch(loginError({ error, inputError: "Invalid OTP!!" }));
+                            } else {
+                                dispatch(loginError({ error, inputError: error.message }));
+                            }
                         });
                     });
             } else {
@@ -55,7 +59,11 @@ export function login(data) {
                         // user in with confirmationResult.confirm(code).
                         dispatch(loginSucces({ required: 'otp', data: { ...data, confirmationResult } }));
                     }).catch(function (error) {
-                        dispatch(loginError({ error, inputError: "" }));
+                        if (error.code === "auth/invalid-phone-number") {
+                            dispatch(loginError({ error, inputError: "Invalid Phone number" }));
+                        } else {
+                            dispatch(loginError({ error, inputError: error.message }));
+                        }
                     });
             }
         }
@@ -111,6 +119,17 @@ export function getItems() {
     }
 }
 
+export function searchItems(data) {
+    return (dispatch) => {
+        firebase.database().ref().child('items').on('value', snapshot => {
+            let matchedItems = snapshot.val().filter((item, index) => item.name.toLowerCase().includes(data.search.toLowerCase()));
+            dispatch(getItemsSuccess(matchedItems));
+        }, (error) => {
+            dispatch(getItemsError({ error }));
+        });
+    }
+}
+
 export function getUserdetailsSuccess(data) {
     return {
         type: GET_USERDETAILS_SUCCESS,
@@ -157,7 +176,6 @@ export function updateUser(user) {
     }
 }
 export function logout() {
-    console.log("Logout");
     // firebase.auth.signOut();
     return {
         type: LOGOUT

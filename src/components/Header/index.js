@@ -6,9 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Icon } from 'antd';
 import Logo from '../../images/logo.png';
 import ProfileDefault from '../../images/default-profile.png';
-import { getUserdetails, logout } from '../../actions';
-
-import { categories } from '../../feed/data';
+import { getCategories, getUserdetails, searchItems, logout } from '../../actions';
 
 class Header extends React.Component {
     constructor(props) {
@@ -25,6 +23,7 @@ class Header extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentWillMount() {
+        this.props.getCategories();
         if (localStorage.getItem('token')) {
             this.props.getUserdetails();
         }
@@ -48,7 +47,7 @@ class Header extends React.Component {
         this.setState({ data });
     }
     getMenuItems() {
-        return categories && categories.map((category, index) => {
+        return this.props.categories && this.props.categories.map((category, index) => {
             const menu = (
                 category.types ? <Menu>{category.types.map((menu) =>
                     <Menu.Item>
@@ -68,6 +67,7 @@ class Header extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log("Search for ", this.state.data);
+        this.props.searchItems(this.state.data);
     }
     render() {
         const { Header } = Layout;
@@ -90,10 +90,10 @@ class Header extends React.Component {
                         <div className="logo-container">
                             <img className="logo" src={Logo} />
                         </div>
-                        <form className="search-form">
-                            <input className="search-input" name="search" onChange={this.handleChange} />
+                        <div className="search-form">
+                            <input className="search-input" name="search" onChange={this.handleChange} placeholder="Enter Product name" />
                             <button className="search-btn" type="button" onClick={this.handleSubmit}><i class="fas fa-search"></i></button>
-                        </form>
+                        </div>
                         {this.props.userDetails && <div className="profile-container">
                             <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link" href="#">
@@ -119,13 +119,14 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        categories: state.categories,
         userDetails: state.userDetails,
         screen: state.screen
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getUserdetails, logout }, dispatch)
+    return bindActionCreators({ getCategories, getUserdetails, searchItems, logout }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

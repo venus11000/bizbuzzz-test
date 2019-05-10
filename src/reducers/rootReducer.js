@@ -13,6 +13,7 @@ const rootReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
+                inputError: '',
                 screen: action.data.required === 'otp' ? 'verifyNumber' : action.data.token ? 'dashboard' : 'getMobileNumberScreen',
                 loginData: action.data.data
             }
