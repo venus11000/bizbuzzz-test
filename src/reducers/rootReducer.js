@@ -1,7 +1,8 @@
-import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS, GET_USERDETAILS_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR } from '../actions';
+import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS, GET_USERDETAILS_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, GET_CATEGORY_FILTER, SHOW_ITEM_POPUP, HIDE_POPUP } from '../actions';
 
 const initialState = {
-    screen: 'getMobileNumberScreen'
+    screen: 'getMobileNumberScreen',
+    categoryFilter: 'all'
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -61,6 +62,20 @@ const rootReducer = (state = initialState, action) => {
                 message: action.data,
                 type: 'unsuccessful'
             }
+        }
+        case GET_CATEGORY_FILTER: return {
+            ...state,
+            categoryFilter: action.data
+        }
+        case SHOW_ITEM_POPUP: return {
+            ...state,
+            showPopup: 'item-description',
+            selectedItem: action.data
+        }
+        case HIDE_POPUP: return {
+            ...state,
+            showPopup: '',
+            selectedItem: null
         }
     }
     return state;

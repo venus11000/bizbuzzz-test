@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { categories, items } from '../feed/data';
 
 export const SHOW_VERIFY_PHONE_SCREEN = 'SHOW_VERIFY_PHONE_SCREEN';
 export const SHOW_LOGIN_SCREEN = 'SHOW_LOGIN_SCREEN';
@@ -15,6 +14,9 @@ export const GET_USERDETAILS_SUCCESS = 'GET_USERDETAILS_SUCCESS';
 export const GET_USERDETAILS_ERROR = 'GET_USERDETAILS_ERROR';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
+export const GET_CATEGORY_FILTER = 'GET_CATEGORY_FILTER';
+export const SHOW_ITEM_POPUP = 'SHOW_ITEM_POPUP';
+export const HIDE_POPUP = 'HIDE_POPUP';
 
 
 export function loginSucces(data) {
@@ -130,6 +132,27 @@ export function searchItems(data) {
     }
 }
 
+export function getCategoryFilter(category) {
+    return {
+        type: GET_CATEGORY_FILTER,
+        data: category
+    }
+}
+export function filterItems(data) {
+    return (dispatch) => {
+        firebase.database().ref().child('items').on('value', snapshot => {
+            let matchedItems = snapshot.val().filter((item, index) =>
+                item.category.toLowerCase().includes(data.category.toLowerCase()) ||
+                data.category.toLowerCase() === 'all'
+            );
+            dispatch(getCategoryFilter(data.category));
+            dispatch(getItemsSuccess(matchedItems));
+        }, (error) => {
+            dispatch(getItemsError({ error }));
+        });
+    }
+}
+
 export function getUserdetailsSuccess(data) {
     return {
         type: GET_USERDETAILS_SUCCESS,
@@ -200,5 +223,19 @@ export function showLoginScreen() {
 export function showDashboard() {
     return {
         type: SHOW_DASHBOARD
+    }
+}
+
+export function showItemPopup(data) {
+    return {
+        type: SHOW_ITEM_POPUP,
+        data
+    }
+}
+
+export function hidePopup() {
+    return {
+        type: HIDE_POPUP,
+        data: false
     }
 }

@@ -6,7 +6,8 @@ import { Link, Redirect } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Icon } from 'antd';
 import Logo from '../../images/logo.png';
 import ProfileDefault from '../../images/default-profile.png';
-import { getCategories, getUserdetails, searchItems, logout } from '../../actions';
+import { getCategories, getUserdetails, searchItems, filterItems, logout } from '../../actions';
+import Popup from '../Popup';
 
 class Header extends React.Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class Header extends React.Component {
         this.logoutFUnction = this.logoutFUnction.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.filterItems = this.filterItems.bind(this);
     }
     componentWillMount() {
         this.props.getCategories();
@@ -30,6 +32,10 @@ class Header extends React.Component {
     }
     componentWillReceiveProps(props) {
         console.log("Update");
+    }
+    filterItems(data) {
+        console.log(data);
+        this.props.filterItems(data);
     }
     redirectHome() {
         if (this.state.redirectHome) {
@@ -51,7 +57,7 @@ class Header extends React.Component {
             const menu = (
                 category.types ? <Menu>{category.types.map((menu) =>
                     <Menu.Item>
-                        <a target="_blank" rel="noopener noreferrer" href="">{menu}</a>
+                        <a rel="noopener noreferrer" onClick={() => this.filterItems({category: menu})}>{menu}</a>
                     </Menu.Item>)}
                 </Menu> : <div></div>
             );
@@ -111,6 +117,7 @@ class Header extends React.Component {
                     {this.getMenuItems()}
                 </Header>
                 {this.redirectHome()}
+                <Popup />
             </div>
         );
     }
@@ -126,7 +133,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getCategories, getUserdetails, searchItems, logout }, dispatch)
+    return bindActionCreators({ getCategories, getUserdetails, searchItems, filterItems, logout }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

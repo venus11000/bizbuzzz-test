@@ -4,19 +4,37 @@ import { bindActionCreators } from 'redux';
 import { Breadcrumb, Pagination } from 'antd';
 import './style.scss';
 
-import { getItems } from '../../actions';
+import { getItems, showItemPopup } from '../../actions';
 
 class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            start: 0,
+            end: 0,
+            total: 0
+        }
+    }
     componentDidMount() {
         this.props.getItems();
     }
-    showItemPopup() {
-        console.log("Clicked...");
+    showItemPopup(data) {
+        console.log("Clicked...", data);
+        this.props.showItemPopup(data);
+    }
+    componentWillReceiveProps(props) {
+        console.log(props);
+        let items = [ ...props.items ];
+        this.setState({
+            start: 0,
+            end: items.length,
+            total: items.length
+        })
     }
     getItemsView() {
         const { items } = this.props;
         return items && items.map((item, index) => {
-            return <div className={item.available > 0 ? "item" : "item disabled"} onClick={this.showItemPopup}>
+            return <div className={item.available > 0 ? "item" : "item disabled"} onClick={() => this.showItemPopup(item)}>
                 {item.liked ? <i className="fas fa-heart liked red"></i> : <i className="far fa-heart liked"></i>}
                 <div className="item-img-container">
                     <div className="item-img">
@@ -53,12 +71,12 @@ class Dashboard extends React.Component {
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>All</Breadcrumb.Item>
                     </Breadcrumb>
-                    <div className="pagination-text">Showing 1 - 40 of 710 results for "grocery"</div>
+                    <div className="pagination-text">Showing {this.state.start} - {this.state.end} of {this.state.total} results for "{this.props.categoryFilter}"</div>
                     <div className="items-container">
                         {this.getItemsView()}
                     </div>
                     <div className="pagination">
-                        <Pagination defaultCurrent={1} total={50} />
+                        <Pagination defaultCurrent={1} total={this.state.total} />
                     </div>
                 </div>
             </div>
@@ -69,11 +87,12 @@ class Dashboard extends React.Component {
 const mapStateToProps = (state) => {
     return {
         items: state.items,
+        categoryFilter: state.categoryFilter,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getItems }, dispatch)
+    return bindActionCreators({ getItems, showItemPopup }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
