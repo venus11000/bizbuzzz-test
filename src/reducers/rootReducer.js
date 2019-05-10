@@ -1,4 +1,4 @@
-import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS, GET_USERDETAILS_SUCCESS } from '../actions';
+import { SHOW_LOGIN_SCREEN, GET_ITEMS_SUCCESS, SHOW_DASHBOARD, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, GET_CATEGORIES_SUCCESS, GET_USERDETAILS_SUCCESS, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR } from '../actions';
 
 const initialState = {
     screen: 'getMobileNumberScreen'
@@ -46,6 +46,20 @@ const rootReducer = (state = initialState, action) => {
         case GET_USERDETAILS_SUCCESS: return {
             ...state,
             userDetails: action.data
+        }
+        case UPDATE_USER_SUCCESS: return {
+            ...state,
+            popup: {
+                message: action.data,
+                type: 'success'
+            }
+        }
+        case UPDATE_USER_ERROR: return {
+            ...state,
+            popup: {
+                message: action.data,
+                type: 'unsuccessful'
+            }
         }
     }
     return state;

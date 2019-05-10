@@ -13,6 +13,8 @@ export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
 export const GET_USERDETAILS_SUCCESS = 'GET_USERDETAILS_SUCCESS';
 export const GET_USERDETAILS_ERROR = 'GET_USERDETAILS_ERROR';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
 
 
 export function loginSucces(data) {
@@ -134,6 +136,26 @@ export function getUserdetails() {
     }
 }
 
+export function updateUserSuccess(data) {
+    return {
+        type: UPDATE_USER_SUCCESS,
+        data
+    }
+}
+
+export function updateUserError(error) {
+    return {
+        type: UPDATE_USER_ERROR,
+        data: error
+    }
+}
+export function updateUser(user) {
+    return (dispatch) => {
+        console.log(user);
+        dispatch(updateUserSuccess({ message: 'Updated succesfully!!' }));
+        // dispatch(updateUserError({message: 'unable to Update'}));
+    }
+}
 export function logout() {
     console.log("Logout");
     // firebase.auth.signOut();
